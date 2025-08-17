@@ -113,7 +113,7 @@ export default function Contact() {
 
       // Send email to Rakesh using Brevo API
       const emailToRakesh = {
-        sender: { email: "noreply@rb2306114@gmail.com", name: "Portfolio Contact Form" },
+        sender: { email: "rb2306114@gmail.com", name: "Portfolio Contact Form" },
         to: [{ email: "rakeshbiswal836@gmail.com", name: "Rakesh Biswal" }],
         subject: `New Contact Form Submission: ${formData.subject}`,
         htmlContent: `
@@ -148,7 +148,7 @@ export default function Contact() {
 
       // Send receipt email to user
       const receiptEmail = {
-        sender: { email: "noreply@rb2306114@gmail.com", name: "Rakesh Biswal" },
+        sender: { email: "rb2306114@gmail.com", name: "Rakesh Biswal" },
         to: [{ email: formData.email, name: formData.name }],
         subject: "Thank you for reaching out! - Rakesh Biswal",
         htmlContent: `
