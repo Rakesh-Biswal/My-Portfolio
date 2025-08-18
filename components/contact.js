@@ -17,6 +17,8 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [currentStep, setCurrentStep] = useState(0)
   const [showIntro, setShowIntro] = useState(false)
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false)
+  const [submittedName, setSubmittedName] = useState("")
 
   const contactInfo = [
     {
@@ -230,9 +232,8 @@ export default function Contact() {
         throw new Error(`Failed to send receipt email: ${errorData.message || response2.statusText}`)
       }
 
-      alert(
-        `Thank you ${formData.name}! Your message has been sent successfully. You'll receive a confirmation email shortly.`,
-      )
+      setSubmittedName(formData.name)
+      setShowSuccessPopup(true)
       setFormData({ name: "", email: "", subject: "", message: "" })
       setCurrentStep(0)
     } catch (error) {
@@ -441,6 +442,82 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      {/* Professional success popup modal */}
+      {showSuccessPopup && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full mx-4 overflow-hidden animate-scale-in">
+            {/* Success Header */}
+            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-white/10 animate-pulse"></div>
+              <div className="relative z-10">
+                <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                  <span className="text-3xl">🎉</span>
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">Message Sent Successfully!</h3>
+                <p className="text-green-100">Thank you for reaching out, {submittedName}!</p>
+              </div>
+            </div>
+
+            {/* Success Content */}
+            <div className="p-6 text-center">
+              <div className="mb-6">
+                <div className="flex justify-center space-x-2 mb-4">
+                  <span className="text-2xl animate-bounce" style={{ animationDelay: "0ms" }}>
+                    ✨
+                  </span>
+                  <span className="text-2xl animate-bounce" style={{ animationDelay: "200ms" }}>
+                    🚀
+                  </span>
+                  <span className="text-2xl animate-bounce" style={{ animationDelay: "400ms" }}>
+                    💼
+                  </span>
+                </div>
+                <h4 className="text-xl font-semibold text-gray-800 mb-3">Your inquiry is on its way!</h4>
+                <p className="text-gray-600 leading-relaxed mb-4">
+                  I've received your message and I'm excited to learn about your project. You'll receive a confirmation
+                  email shortly, and I'll get back to you within 24-48 hours.
+                </p>
+                <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border border-blue-100">
+                  <p className="text-sm text-gray-700">
+                    <span className="font-semibold text-blue-600">What's next?</span>
+                    <br />
+                    Check your email for confirmation and feel free to explore my other projects while you wait!
+                  </p>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="space-y-3">
+                <Button
+                  onClick={() => setShowSuccessPopup(false)}
+                  className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
+                >
+                  Continue Exploring Portfolio
+                </Button>
+                <div className="flex space-x-2">
+                  <Button
+                    variant="outline"
+                    onClick={() => window.open("https://www.linkedin.com/in/rakesh-biswal-b68a342b3", "_blank")}
+                    className="flex-1 border-blue-200 text-blue-600 hover:bg-blue-50 transition-all duration-300"
+                  >
+                    <span className="mr-2">💼</span>
+                    LinkedIn
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => window.open("https://github.com/rakeshbiswal", "_blank")}
+                    className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50 transition-all duration-300"
+                  >
+                    <span className="mr-2">🐙</span>
+                    GitHub
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   )
 }
