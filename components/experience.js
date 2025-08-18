@@ -54,7 +54,7 @@ export default function Experience() {
         "🤖 360° rotation and precise movement control",
       ],
       icon: "🤖",
-      link: "https://linktr.ee/Rakesh10",
+      link: "https://www.linkedin.com/posts/rakesh-biswal-b68a342b3_excited-to-share-my-latest-project-a-voice-controlled-activity-7236356639824453632-zT4r?utm_source=social_share_send&amp;utm_medium=member_desktop_web&amp;rcm=ACoAAEtv_IAB-yx3Eor6C3BKIXXxeCGm9fTm5ek",
     },
     {
       title: "V-Bhumi - India's Trusted Land Verification Platform 🏞️",
@@ -78,7 +78,7 @@ export default function Experience() {
         "📄 Automated document verification and processing",
       ],
       icon: "🏞️",
-      link: "https://github.com/rakeshbiswal2/vbhumi",
+      link: "https://test.verifiedbhumi.com",
     },
     {
       title: "GetMyBook - Custom E-Commerce Platform 📚",
@@ -128,7 +128,7 @@ export default function Experience() {
         "📹 360° AI camera integration for comprehensive monitoring",
       ],
       icon: "🔥",
-      link: "#",
+      link: "https://docs.google.com/presentation/d/1-q5fKGY5xhG2vy7q_sCYhY5CHWphfOHA/edit?slide=id.p1#slide=id.p1",
     },
   ]
 
