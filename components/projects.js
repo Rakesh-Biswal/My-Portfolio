@@ -17,7 +17,7 @@ export default function Projects() {
       fullDescription:
         "Designed, developed, and launched a full-featured platform automating meal orders, daily tracking, subscription renewals, and reporting—streamlining operations for canteen owners and enhancing transparency for customers.",
       image: "/modern-restaurant-dashboard.png",
-      technologies: ["React", "Node.js", "MongoDB", "Payment Gateway", "Real-time Updates"],
+      technologies: ["Wordpress","React", "Node.js", "MongoDB", "Payment Gateway", "Real-time Updates"],
       features: [
         "Order Management",
         "Subscription System",

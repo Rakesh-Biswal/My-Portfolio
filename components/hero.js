@@ -184,7 +184,7 @@ export default function Hero() {
           <div className="absolute top-10 left-0 w-full flex justify-center">
             <div className="animate-[slideInFromLeft_0.8s_ease-out] flex items-center gap-3 bg-primary/10 backdrop-blur-sm rounded-full px-6 py-3 border">
               <Truck className="w-6 h-6 text-primary animate-[truckMove_1s_ease-in-out_infinite]" />
-              <span className="text-primary font-medium">Delivering your portfolio...</span>
+              <span className="text-primary font-medium">Thanks for Checkout...</span>
             </div>
           </div>
         )}
@@ -309,42 +309,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div
-            className={`flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 transition-all duration-1000 delay-500 ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-          >
-            <Button
-              size="lg"
-              onClick={() => scrollToSection("projects")}
-              className="group px-8 py-3 text-lg bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 shadow-lg hover:shadow-xl transition-all duration-300"
-            >
-              <Code className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-              View My Work
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              onClick={() => scrollToSection("contact")}
-              className="px-8 py-3 text-lg border-2 hover:bg-primary/10 transition-all duration-300"
-            >
-              <Mail className="w-5 h-5 mr-2" />
-              Get In Touch
-            </Button>
-            <Button
-              variant="ghost"
-              size="lg"
-              className="px-8 py-3 text-lg hover:bg-secondary/10 transition-all duration-300"
-              onClick={() =>
-                window.open(
-                  "https://drive.google.com/uc?export=download&id=13LecI-OLtkm4pWLXV641TNzW4l0GAgiv",
-                  "_blank"
-                )
-              }
-            >
-              <Download className="w-5 h-5 mr-2" />
-              Download CV
-            </Button>
-
-          </div>
+          
 
           <div
             className={`flex justify-center gap-6 mb-8 transition-all duration-1000 delay-700 ${showContent ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
@@ -374,15 +339,6 @@ export default function Hero() {
           className={`absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer transition-all duration-1000 delay-1000 ${showContent ? "opacity-100" : "opacity-0"}`}
           onClick={() => scrollToSection("about")}
         >
-          <div className="flex flex-col items-center gap-2 group">
-            <span className="text-sm text-muted-foreground group-hover:text-primary transition-colors duration-300">
-              Scroll Down
-            </span>
-            <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center group-hover:border-primary transition-colors duration-300">
-              <div className="w-1 h-3 bg-primary rounded-full mt-2 animate-pulse" />
-            </div>
-            <ArrowDown className="w-4 h-4 text-primary/70 group-hover:text-primary transition-colors duration-300" />
-          </div>
         </div>
       </div>
 

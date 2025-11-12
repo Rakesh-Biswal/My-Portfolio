@@ -1,315 +1,303 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useState, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { ChevronDown, ChevronUp, Calendar, MapPin, ExternalLink, Building2 } from "lucide-react"
 
-export default function Skills() {
-  const sectionRef = useRef(null)
-  const [animated, setAnimated] = useState(false)
-  const [activeSkill, setActiveSkill] = useState(null)
-  const [introComplete, setIntroComplete] = useState(false)
+export default function Experience() {
+  const [activeCompany, setActiveCompany] = useState(0)
+  const [expandedItems, setExpandedItems] = useState({})
 
-  const skillCategories = [
+  const experienceData = [
     {
-      title: "Frontend Development",
-      icon: "💻",
-      color: "from-blue-500 to-cyan-500",
-      bgGradient: "from-blue-50 to-cyan-50",
-      skills: [
-        { name: "React.js", level: 95, icon: "⚛️" },
-        { name: "Next.js", level: 90, icon: "🔺" },
-        { name: "JavaScript", level: 98, icon: "🟨" },
-        { name: "TypeScript", level: 85, icon: "🔷" },
-        { name: "Tailwind CSS", level: 92, icon: "🎨" },
-        { name: "HTML/CSS", level: 96, icon: "📄" },
-        { name: "Vue.js", level: 80, icon: "💚" },
-        { name: "Angular", level: 75, icon: "🔴" },
+      company: "Tech Innovators Inc.",
+      role: "Senior Full Stack Developer",
+      period: "2022 - Present",
+      location: "San Francisco, CA",
+      description: "Leading development of scalable web applications and mentoring junior developers.",
+      achievements: [
+        "Led a team of 5 developers to build a SaaS platform serving 10k+ users",
+        "Improved application performance by 40% through code optimization",
+        "Implemented CI/CD pipeline reducing deployment time by 60%",
+        "Mentored 3 junior developers to senior level within 2 years"
       ],
+      technologies: ["WordPress","PHP-Laravel","React", "Node.js", "TypeScript", "AWS", "MongoDB"],
+      link: "#"
     },
     {
-      title: "Backend Development",
-      icon: "⚙️",
-      color: "from-green-500 to-emerald-500",
-      bgGradient: "from-green-50 to-emerald-50",
-      skills: [
-        { name: "Node.js", level: 88, icon: "🟢" },
-        { name: "Express.js", level: 85, icon: "🚀" },
-        { name: "Python", level: 82, icon: "🐍" },
-        { name: "MongoDB", level: 86, icon: "🍃" },
-        { name: "PostgreSQL", level: 80, icon: "🐘" },
-        { name: "REST APIs", level: 93, icon: "🔗" },
-        { name: "GraphQL", level: 78, icon: "📊" },
-        { name: "Firebase", level: 84, icon: "🔥" },
+      company: "Digital Solutions Ltd.",
+      role: "Full Stack Developer",
+      period: "2020 - 2022",
+      location: "New York, NY",
+      description: "Developed and maintained multiple client projects with focus on user experience.",
+      achievements: [
+        "Built 15+ client websites with 99.9% uptime",
+        "Reduced page load time by 50% across all projects",
+        "Implemented responsive designs for mobile-first approach",
+        "Collaborated with UX team to improve conversion rates by 25%"
       ],
+      technologies: ["JavaScript", "React", "Python", "PostgreSQL", "Docker"],
+      link: "#"
     },
     {
-      title: "Tools & Technologies",
-      icon: "🛠️",
-      color: "from-purple-500 to-pink-500",
-      bgGradient: "from-purple-50 to-pink-50",
-      skills: [
-        { name: "Git/GitHub", level: 94, icon: "🐙" },
-        { name: "Docker", level: 76, icon: "🐳" },
-        { name: "AWS", level: 72, icon: "☁️" },
-        { name: "Figma", level: 88, icon: "🎯" },
-        { name: "VS Code", level: 97, icon: "💙" },
-        { name: "Postman", level: 89, icon: "📮" },
-        { name: "Linux", level: 83, icon: "🐧" },
-        { name: "Webpack", level: 79, icon: "📦" },
+      company: "StartUp Ventures",
+      role: "Frontend Developer",
+      period: "2019 - 2020",
+      location: "Austin, TX",
+      description: "Built user interfaces for early-stage startup products and prototypes.",
+      achievements: [
+        "Developed MVP for 3 successful startup products",
+        "Created reusable component library saving 200+ development hours",
+        "Implemented A/B testing framework for product validation",
+        "Worked directly with founders to iterate on product vision"
       ],
+      technologies: ["WordPress","React", "Vue.js", "SASS", "Firebase", "Figma"],
+      link: "#"
     },
     {
-      title: "Hardware & IoT",
-      icon: "🔧",
-      color: "from-orange-500 to-red-500",
-      bgGradient: "from-orange-50 to-red-50",
-      skills: [
-        { name: "Arduino", level: 85, icon: "🤖" },
-        { name: "Raspberry Pi", level: 80, icon: "🍓" },
-        { name: "ESP32/ESP8266", level: 82, icon: "📡" },
-        { name: "Sensors Integration", level: 88, icon: "📊" },
-        { name: "PCB Design", level: 75, icon: "🔌" },
-        { name: "3D Printing", level: 78, icon: "🖨️" },
-        { name: "Embedded C", level: 83, icon: "⚡" },
-        { name: "IoT Protocols", level: 86, icon: "🌐" },
+      company: "Freelance",
+      role: "Web Developer",
+      period: "2018 - 2019",
+      location: "Remote",
+      description: "Provided web development services for small businesses and startups.",
+      achievements: [
+        "Delivered 20+ projects on time and within budget",
+        "Maintained 100% client satisfaction rate",
+        "Built e-commerce solutions generating $500k+ in revenue",
+        "Created custom CMS solutions for non-technical clients"
       ],
-    },
+      technologies: ["WordPress","HTML/CSS", "JavaScript", "PHP", "WordPress", "MySQL"],
+      link: "#"
+    }
   ]
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIntroComplete(true)
-    }, 2000)
-    return () => clearTimeout(timer)
-  }, [])
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("revealed")
-            if (!animated) {
-              setAnimated(true)
-              setTimeout(() => {
-                const skillBars = document.querySelectorAll(".skill-bar")
-                skillBars.forEach((bar, index) => {
-                  setTimeout(() => {
-                    bar.classList.add("animate")
-                  }, index * 100)
-                })
-              }, 800)
-            }
-          }
-        })
-      },
-      { threshold: 0.1 },
-    )
-
-    const elements = sectionRef.current?.querySelectorAll(".scroll-reveal")
-    elements?.forEach((el) => observer.observe(el))
-
-    return () => observer.disconnect()
-  }, [animated])
+  const toggleAchievements = (index) => {
+    setExpandedItems(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }))
+  }
 
   return (
-    <section id="skills" ref={sectionRef} className="py-20 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
-        <div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-green-400/20 to-blue-600/20 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        ></div>
-      </div>
+    <section id="experience" className="min-h-screen py-20 bg-gray-50 dark:bg-gray-900">
+      <div className="container mx-auto px-6">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-800 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-4">
+            Professional Journey
+          </h2>
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            My career path through innovative companies and challenging projects
+          </p>
+        </motion.div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="scroll-reveal mb-20 text-center">
-          <div className="relative">
-            {/* Delivery truck animation */}
-            <div
-              className={`absolute -top-16 left-1/2 transform -translate-x-1/2 transition-all duration-2000 ${introComplete ? "translate-x-full opacity-0" : "opacity-100"}`}
-            >
-              <div className="flex items-center space-x-2 bg-white rounded-full px-4 py-2 shadow-lg border">
-                <span className="text-2xl">🚚</span>
-                <span className="text-sm font-medium text-gray-700">Delivering Skills...</span>
-              </div>
-            </div>
-
-            {/* Animated title with letter drop effect */}
-            <div className="relative">
-              {"SKILLS & EXPERTISE".split("").map((letter, index) => (
-                <span
+        <div className="max-w-6xl mx-auto">
+          {/* Timeline Navigation */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide"
+          >
+            <div className="flex space-x-4 min-w-max">
+              {experienceData.map((exp, index) => (
+                <motion.button
                   key={index}
-                  className={`inline-block text-4xl md:text-6xl font-bold font-mono bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent transition-all duration-500 ${
-                    introComplete ? "translate-y-0 opacity-100" : "-translate-y-20 opacity-0"
+                  onClick={() => setActiveCompany(index)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`flex items-center px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ${
+                    activeCompany === index
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg"
+                      : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 shadow-md"
                   }`}
-                  style={{
-                    animationDelay: `${index * 0.1 + 0.5}s`,
-                    transitionDelay: `${index * 0.1 + 0.5}s`,
-                  }}
                 >
-                  {letter === " " ? "\u00A0" : letter}
-                </span>
+                  <Building2 size={18} className="mr-2" />
+                  {exp.company}
+                </motion.button>
               ))}
             </div>
+          </motion.div>
 
-            {/* Animated underline */}
-            <div
-              className={`w-32 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mt-4 transition-all duration-1000 ${introComplete ? "scale-x-100" : "scale-x-0"}`}
-            />
-          </div>
-
-          <p
-            className={`text-lg text-muted-foreground mt-8 max-w-3xl mx-auto transition-all duration-1000 delay-1000 ${introComplete ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"}`}
-          >
-            🚀 A comprehensive arsenal of cutting-edge technologies and frameworks that power extraordinary digital
-            experiences
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-2 xl:grid-cols-4 gap-8 mb-16">
-          {skillCategories.map((category, categoryIndex) => (
-            <Card
-              key={category.title}
-              className={`scroll-reveal group relative overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-gradient-to-br ${category.bgGradient} backdrop-blur-sm`}
-              style={{ animationDelay: `${categoryIndex * 0.2}s` }}
+          {/* Experience Content */}
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Company Details */}
+            <motion.div
+              key={activeCompany}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="lg:col-span-2"
             >
-              <div
-                className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-              />
-
-              <CardHeader className="text-center relative z-10 pb-4">
-                <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">
-                  {category.icon}
-                </div>
-                <CardTitle
-                  className={`text-lg font-bold bg-gradient-to-r ${category.color} bg-clip-text text-transparent`}
-                >
-                  {category.title}
-                </CardTitle>
-              </CardHeader>
-
-              <CardContent className="space-y-4 relative z-10">
-                {category.skills.map((skill, skillIndex) => (
-                  <div
-                    key={skill.name}
-                    className="space-y-2 group/skill cursor-pointer"
-                    onMouseEnter={() => setActiveSkill(`${categoryIndex}-${skillIndex}`)}
-                    onMouseLeave={() => setActiveSkill(null)}
-                  >
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-lg">{skill.icon}</span>
-                        <span className="text-sm font-medium text-foreground group-hover/skill:text-primary transition-colors">
-                          {skill.name}
-                        </span>
+              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8">
+                {/* Header */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6">
+                  <div>
+                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                      {experienceData[activeCompany].role}
+                    </h3>
+                    <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-400">
+                      <div className="flex items-center">
+                        <Calendar size={16} className="mr-1" />
+                        {experienceData[activeCompany].period}
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs text-muted-foreground">{skill.level}%</span>
-                        {activeSkill === `${categoryIndex}-${skillIndex}` && (
-                          <span className="text-xs animate-bounce">⭐</span>
-                        )}
-                      </div>
-                    </div>
-
-                    <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                      <div
-                        className={`skill-bar h-2 rounded-full bg-gradient-to-r ${category.color} relative transition-all duration-1000 ease-out ${
-                          activeSkill === `${categoryIndex}-${skillIndex}` ? "shadow-lg" : ""
-                        }`}
-                        style={{
-                          width: animated ? `${skill.level}%` : "0%",
-                          boxShadow:
-                            activeSkill === `${categoryIndex}-${skillIndex}`
-                              ? `0 0 10px rgba(59, 130, 246, 0.5)`
-                              : "none",
-                        }}
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 animate-pulse" />
+                      <div className="flex items-center">
+                        <MapPin size={16} className="mr-1" />
+                        {experienceData[activeCompany].location}
                       </div>
                     </div>
                   </div>
-                ))}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                  <motion.a
+                    href={experienceData[activeCompany].link}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="inline-flex items-center px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors mt-4 sm:mt-0"
+                  >
+                    Visit <ExternalLink size={16} className="ml-1" />
+                  </motion.a>
+                </div>
 
-        <div className="scroll-reveal">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold bg-gradient-to-r from-gray-700 to-gray-900 bg-clip-text text-transparent mb-4">
-              🌟 Technology Arsenal
-            </h3>
-            <p className="text-muted-foreground">Cutting-edge tools that power innovation</p>
-          </div>
+                {/* Description */}
+                <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+                  {experienceData[activeCompany].description}
+                </p>
 
-          <div className="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-10 gap-6">
-            {[
-              { name: "React", icon: "⚛️", color: "from-blue-400 to-blue-600" },
-              { name: "Next.js", icon: "🔺", color: "from-gray-700 to-gray-900" },
-              { name: "Node.js", icon: "🟢", color: "from-green-500 to-green-700" },
-              { name: "MongoDB", icon: "🍃", color: "from-green-600 to-green-800" },
-              { name: "PostgreSQL", icon: "🐘", color: "from-blue-600 to-blue-800" },
-              { name: "JavaScript", icon: "🟨", color: "from-yellow-400 to-yellow-600" },
-              { name: "TypeScript", icon: "🔷", color: "from-blue-500 to-blue-700" },
-              { name: "Python", icon: "🐍", color: "from-green-500 to-blue-600" },
-              { name: "AWS", icon: "☁️", color: "from-orange-400 to-orange-600" },
-              { name: "Docker", icon: "🐳", color: "from-blue-400 to-cyan-500" },
-              { name: "Arduino", icon: "🤖", color: "from-teal-500 to-teal-700" },
-              { name: "Raspberry Pi", icon: "🍓", color: "from-red-500 to-pink-600" },
-            ].map((tech, index) => (
-              <div
-                key={tech.name}
-                className={`group relative flex flex-col items-center justify-center p-4 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-3 cursor-pointer border border-gray-100`}
-                style={{
-                  animationDelay: `${index * 0.1}s`,
-                  animation: `float 3s ease-in-out infinite ${index * 0.2}s`,
-                }}
-              >
-                <div
-                  className={`absolute inset-0 bg-gradient-to-br ${tech.color} opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-300`}
-                />
-                <div className="text-3xl mb-2 group-hover:scale-125 transition-transform duration-300">{tech.icon}</div>
-                <span className="text-xs font-medium text-gray-700 group-hover:text-gray-900 transition-colors text-center">
-                  {tech.name}
-                </span>
+                {/* Achievements */}
+                <div className="mb-6">
+                  <button
+                    onClick={() => toggleAchievements(activeCompany)}
+                    className="flex items-center text-lg font-semibold text-gray-800 dark:text-white mb-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                  >
+                    Key Achievements
+                    {expandedItems[activeCompany] ? (
+                      <ChevronUp size={20} className="ml-2" />
+                    ) : (
+                      <ChevronDown size={20} className="ml-2" />
+                    )}
+                  </button>
 
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-xs text-white font-bold">✓</span>
+                  <AnimatePresence>
+                    {expandedItems[activeCompany] && (
+                      <motion.ul
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="space-y-3 overflow-hidden"
+                      >
+                        {experienceData[activeCompany].achievements.map((achievement, index) => (
+                          <motion.li
+                            key={index}
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.3, delay: index * 0.1 }}
+                            className="flex items-start"
+                          >
+                            <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0" />
+                            <span className="text-gray-600 dark:text-gray-300">{achievement}</span>
+                          </motion.li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Technologies */}
+                <div>
+                  <h4 className="text-lg font-semibold text-gray-800 dark:text-white mb-4">
+                    Technologies Used
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {experienceData[activeCompany].technologies.map((tech, index) => (
+                      <motion.span
+                        key={tech}
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: index * 0.1 }}
+                        className="px-3 py-1 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 text-blue-600 dark:text-blue-400 rounded-full text-sm font-medium border border-blue-200 dark:border-blue-800"
+                      >
+                        {tech}
+                      </motion.span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
+            </motion.div>
 
-        <div className="scroll-reveal mt-20 text-center">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { number: "50+", label: "Projects Completed", icon: "🚀" },
-              { number: "15+", label: "Technologies Mastered", icon: "💻" },
-              { number: "3+", label: "Years Experience", icon: "⏱️" },
-              { number: "100%", label: "Client Satisfaction", icon: "⭐" },
-            ].map((stat, index) => (
-              <div
-                key={stat.label}
-                className="group p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2"
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">{stat.icon}</div>
-                <div className="text-3xl font-bold text-primary mb-1">{stat.number}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+            {/* Timeline Visualization */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+              className="hidden lg:block"
+            >
+              <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-6 sticky top-24">
+                <h4 className="text-lg font-semibold text-gray-800 dark:text-white mb-6 text-center">
+                  Career Timeline
+                </h4>
+                <div className="relative">
+                  {/* Vertical Line */}
+                  <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500" />
+                  
+                  {experienceData.map((exp, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      className={`flex items-center mb-6 last:mb-0 cursor-pointer group ${
+                        activeCompany === index ? "scale-105" : ""
+                      } transition-transform duration-300`}
+                      onClick={() => setActiveCompany(index)}
+                    >
+                      {/* Dot */}
+                      <div
+                        className={`w-4 h-4 rounded-full border-4 z-10 transition-all duration-300 ${
+                          activeCompany === index
+                            ? "bg-blue-500 border-blue-200 scale-125"
+                            : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 group-hover:border-blue-300"
+                        }`}
+                      />
+                      
+                      {/* Content */}
+                      <div className="ml-4 flex-1">
+                        <div
+                          className={`p-3 rounded-xl transition-all duration-300 ${
+                            activeCompany === index
+                              ? "bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border border-blue-200 dark:border-blue-800 shadow-md"
+                              : "bg-gray-50 dark:bg-gray-700/50 group-hover:bg-gray-100 dark:group-hover:bg-gray-700"
+                          }`}
+                        >
+                          <h5
+                            className={`font-semibold transition-colors duration-300 ${
+                              activeCompany === index
+                                ? "text-blue-600 dark:text-blue-400"
+                                : "text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white"
+                            }`}
+                          >
+                            {exp.company}
+                          </h5>
+                          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                            {exp.period}
+                          </p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
-            ))}
+            </motion.div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-10px); }
-        }
-      `}</style>
     </section>
   )
 }
